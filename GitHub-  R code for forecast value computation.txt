@@ -1,0 +1,52 @@
+############ Clear console 
+rm(list=ls())
+
+
+
+############ Read Data set for Ontario ############
+
+ONdata <- read_excel("C:/Users/Tania/Desktop/GSC assignment/Final Version of cleaned Data.xlsx", sheet = "Ontario CPC without forecast")
+View(ONdata)
+
+
+############ Time Series Analysis ############
+
+library(forecast)
+
+############### Define variables
+
+ONHospitals=ts(ONdata$Hospitals , start= 1975)
+ONOther_Institutions=ts(ONdata$ 'Other Institutions' , start= 1975)
+ONPhysicians=ts(ONdata$Physicians , start= 1975)
+ONOther_Professionals=ts(ONdata$ 'Other Professionals' , start= 1975)
+ONDrugs=ts(ONdata$Drugs , start= 1975)
+ONCapital=ts(ONdata$Capital , start= 1975)
+ONPublic_Health=ts(ONdata$ 'Public Health' , start= 1975)
+ONAdministration=ts(ONdata$Administration , start= 1975)
+ONOther_Health_Spending=ts(ONdata$ 'Other Health Spending' , start= 1975)
+
+################ Time series plots
+
+ts.plot(ONHospitals, ONOther_Institutions, ONPhysicians, ONOther_Professionals, ONDrugs, ONCapital, ONPublic_Health, ONAdministration,         ONOther_Health_Spending, 
+        gpars=list(xlab="year", ylab="cost per capita by year"),
+        main= "Trend of use of fund factors for Ontario from 1975 to 2015",
+        lty=c(1:6)
+        )
+
+
+############# forecast values
+
+model1 <- as.data.frame(forecast(ONHospitals))
+model2 <- as.data.frame(forecast(ONOther_Institutions))
+model3 <- as.data.frame(forecast(ONPhysicians))
+model4 <- as.data.frame(forecast(ONOther_Professionals))
+model5 <- as.data.frame(forecast(ONDrugs))
+model6 <- as.data.frame(forecast(ONCapital))
+model7 <- as.data.frame(forecast(ONPublic_Health))
+model8 <- as.data.frame(forecast(ONAdministration))
+model9 <- as.data.frame(forecast(ONOther_Health_Spending))
+
+
+cbind(model1[,1], model2[,1], model3[,1], model4[,1], model5[,1], model6[,1], model7[,1], model8[,1], model9[,1])
+
+
